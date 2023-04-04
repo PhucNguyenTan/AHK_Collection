@@ -36,12 +36,12 @@ center := 0.5
 low := 0.15
 high := 0.85
 full := 0.9996
-MouseMoveSpeed := 10
 
-MouseNormal := 10
 MouseSlow := 5
-MouseFast := 20
-MouseFaster :=30
+MouseNormal := 20
+MouseFast := 40
+
+MouseMoveSpeed := MouseNormal
 
 #Numpad1::#1
 #Numpad2::#2
@@ -85,8 +85,8 @@ Return
 			if GetKeyState("Right", "P")
 				xpos := xpos + 1
 			
-			MouseMove, xpos * MouseMoveSpeed, ypos * MouseMoveSpeed, 0, R
-			Sleep, 1
+			MouseMove, xpos * MouseMoveSpeed, ypos * MouseMoveSpeed, 1, R
+			Sleep, 10
 		}
 	}
 
@@ -98,11 +98,9 @@ Return
 		if(GetKeyState("vkC0", "P"))
 			MouseMoveSpeed := MouseSlow
 		else if(GetKeyState("1", "P"))
-			MouseMoveSpeed := MouseFast
-		else if(GetKeyState("2", "P"))
-			MouseMoveSpeed := MouseFaster
-		else ; TODO: fix this. THis else is unused
 			MouseMoveSpeed := MouseNormal
+		else if(GetKeyState("2", "P"))
+			MouseMoveSpeed := MouseFast
 	return
 
 		
