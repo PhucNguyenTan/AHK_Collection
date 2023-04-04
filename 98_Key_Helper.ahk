@@ -2,12 +2,14 @@
 
 MoveMouseToPercentageOfAppSize(xPercent, yPercent) 
 {
+	CoordMode, Mouse, Window
     WinGetActiveStats, Title, Width, Height, X, Y
-    MouseMove, Width * xPercent, Height * yPercent, 0
+    MouseMove, Width * xPercent, Height * yPercent
 }
 
 MoveMouseToPercentageOfWindow1(xPercent, yPercent) 
 {
+	CoordMode, Mouse, Screen
 	SysGet, Monitor1, Monitor, 1 
     MonitorWidth := Monitor1Right - Monitor1Left 
     MonitorHeight := Monitor1Bottom - Monitor1Top 
@@ -16,6 +18,7 @@ MoveMouseToPercentageOfWindow1(xPercent, yPercent)
 
 MoveMouseToPercentageOfWindow2(xPercent, yPercent) 
 {
+	CoordMode, Mouse, Screen
 	SysGet, Monitor2, Monitor, 2 
     MonitorWidth := Monitor2Right - Monitor2Left 
     MonitorHeight := Monitor2Bottom - Monitor2Top 
@@ -24,6 +27,9 @@ MoveMouseToPercentageOfWindow2(xPercent, yPercent)
 	;SysGet, Monitor, MonitorWorkArea, 2
 	;MouseMove, MonitorLeft + (MonitorRight - MonitorLeft) *xPercent, MonitorTop + (MonitorBottom - ;MonitorTop) * yPercent, 0
 }
+
+
+		
 
 
 center := 0.5
@@ -126,61 +132,61 @@ return
 	Esc::vkC0
 	+Esc::+vkC0
 	
-	$2::
-	$1::
-	$Numpad5::
-		if(GetKeyState("Numpad5", "P")){
-		
-		if(GetKeyState("1", "P"))
-			MoveMouseToPercentageOfWindow1(center, center)
-		else if (GetKeyState("2", "P"))
-			MoveMouseToPercentageOfWindow2(center, center)
-		else
-			MoveMouseToPercentageOfAppSize(center, center)
-			}
-	Return
-  
-	Numpad1::
-	MoveMouseToPercentageOfAppSize(low, high)
-	Return
+    1::return
+    2::return
 
-	Numpad2::
-	MoveMouseToPercentageOfAppSize(center, high)
-	Return
+	MoveMouseUltimate(xPercent, yPercent)
+	{
+		global MoveMouseUltimateActive := true
+		if(GetKeyState("1", "P"))
+			MoveMouseToPercentageOfWindow1(xPercent, yPercent)
+		else if (GetKeyState("2", "P"))
+			MoveMouseToPercentageOfWindow2(xPercent, yPercent)
+		else
+			MoveMouseToPercentageOfAppSize(xPercent, yPercent)
+		MoveMouseUltimateActive := false
+	}
+	
+	Numpad5::MoveMouseUltimate(center, center)
+	
+	Numpad1::MoveMouseUltimate(low, high)
+
+	Numpad2::MoveMouseUltimate(center, high)
+
 
 	Numpad3::
-	MoveMouseToPercentageOfAppSize(high, high)
+	MoveMouseUltimate(high, high)
 	Return
 
 	Numpad4::
-	MoveMouseToPercentageOfAppSize(low, center)
+	MoveMouseUltimate(low, center)
 	Return
 
 	Numpad6::
-	MoveMouseToPercentageOfAppSize(high, center)
+	MoveMouseUltimate(high, center)
 	Return
 
 	Numpad8::
-	MoveMouseToPercentageOfAppSize(center, low)
+	MoveMouseUltimate(center, low)
 	Return
 
 	Numpad7::
-	MoveMouseToPercentageOfAppSize(low, low)
+	MoveMouseUltimate(low, low)
 	Return
 
 	Numpad9::
-	MoveMouseToPercentageOfAppSize(high, low)
+	MoveMouseUltimate(high, low)
 	Return
 
 	NumpadDot::
-	MoveMouseToPercentageOfAppSize(full, full)
+	MoveMouseUltimate(full, full)
 	Return
 
 	NumpadAdd::
-	MoveMouseToPercentageOfAppSize(full, center)
+	MoveMouseUltimate(full, center)
 	Return
 
 	Numpad0::
-	MoveMouseToPercentageOfAppSize(center, full)
+	MoveMouseUltimate(center, full)
 	Return
 Return
